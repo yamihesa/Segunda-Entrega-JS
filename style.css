@@ -255,8 +255,8 @@ h3{
 }
 h1 {
     max-width: 10rem;
-    padding-left: 5rem;
-    padding-top: 5rem;
+    padding-left: 3rem;
+    margin-top: -5rem;
     text-align: center;
     color: rgb(137, 43, 139);
     text-transform: uppercase;

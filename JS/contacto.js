@@ -1,4 +1,4 @@
-/* const formulario= []; */
+
 let form = document.getElementById("form")
  
 form.addEventListener("submit", e =>{
