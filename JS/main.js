@@ -25,6 +25,30 @@ botonVaciar.addEventListener('click', () => {
     carrito.length = 0
     actualizarCarrito()
 })
+let botonFinalizar = document.getElementById("finalizar-compra")
+botonFinalizar.addEventListener("click", totalCompra)
+function totalCompra(){
+    console.log(precioTotal)
+    
+    
+    Swal.fire({
+        title: 'Estas seguro que quieres finalizar tu compra?',
+        text: `Total a abonar:$${precioTotal.innerText}`,
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: `No`,
+      }).then((result) => {
+        
+        if (result.isConfirmed) {
+          Swal.fire('Gracias por tu compra!', '', 'success')
+        } 
+        else if (result.isDenied) {
+          Swal.fire('A seguir comprando')
+        }
+      })
+      
+}
+
 
 
 stockProductos.forEach((producto) => {
@@ -33,7 +57,6 @@ stockProductos.forEach((producto) => {
     div.innerHTML = `
     <img src=${producto.img} class="img" alt= "">
     <h3>${producto.nombre}</h3>
-    
     <p class="precioProducto">Precio:$ ${producto.precio}</p>
     <button id="agregar${producto.id}" class="boton-agregar">Agregar</button>
 
@@ -63,6 +86,7 @@ const agregarAlCarrito = (prodId) => {
     } else { 
 
         const item = stockProductos.find((prod) => prod.id === prodId)
+        
         carrito.push(item)
     }
 
@@ -77,6 +101,22 @@ const eliminarDelCarrito = (prodId) => {
     carrito.splice(indice, 1) 
     actualizarCarrito() 
     console.log(carrito)
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'Eliminaste el producto del carrito'
+      })
 }
 
 const actualizarCarrito = () => {
@@ -87,7 +127,7 @@ const actualizarCarrito = () => {
         const div = document.createElement('div')
         div.className = ('productoEnCarrito')
         div.innerHTML = `
-        <p>${prod.nombre} class="nombreProducto"</p>
+        <p>${prod.nombre} </p>
         <p>Precio:$${prod.precio}</p>
         <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
         <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
@@ -102,6 +142,4 @@ const actualizarCarrito = () => {
     contadorCarrito.innerText = carrito.length
     console.log(carrito)
     precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
-    
-
 }

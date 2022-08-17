@@ -30,8 +30,50 @@ form.innerHTML =`
   <label class="comentario">Comentario</label>
   <textarea class="form-control" id="message" name="message" placeholder="Deje su mensaje" rows="6"></textarea>
 </div>
-<div class="form-groupBotones">
-  <button id="boton" type="submit" class="btn btn enviar">Enviar</button>
-  <button id="boton1" type="submit" class="btn btn borrar">Borrar</button>
+<div class="form-boton">
+  <button id="boton"onclick="getData()" type="submit" class="btn btn enviar">Enviar</button>
 </div>
 `
+
+let getData = function(){
+  let nombre = document.getElementById("nombre").value;
+  let apellido = document.getElementById("apellido").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let message = document.getElementById("message").value; 
+  if(nombre == ""){
+    document.getElementById("nombre").focus()
+  }else{
+    if(apellido == ""){
+      document.getElementById("apellido").focus()
+      }else{
+        if(email == ""){
+          document.getElementById("email").focus()
+          }else{  
+            if(phone == ""){
+              document.getElementById("phone").focus()  
+              }else{
+                if(message == ""){
+                  document.getElementById("message").focus()
+                }
+
+                Swal.fire({
+                  position: 'top-rigth',
+                  icon: 'success',
+                  title: 'Su mensaje fue enviado',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+
+  }
+  console.log(nombre + ""+ apellido + email+phone+message)
+  document.getElementById("nombre").value = ""
+  document.getElementById("apellido").value = ""
+  document.getElementById("email").value = ""
+  document.getElementById("phone").value = ""
+  document.getElementById("message").value = ""
+  document.getElementById("nombre").focus()
+          }
+        }
+      }
+    }
